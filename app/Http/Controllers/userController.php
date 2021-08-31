@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\user;
+use App\Models\userModel;
+use Auth;
 class userController extends Controller
 {
     /**
@@ -13,7 +14,7 @@ class userController extends Controller
      */
     public function index()
     {
-      $data = user::paginate(5);
+      $data = userModel::paginate(5);
 
       return view('login.index');
     }
@@ -58,7 +59,7 @@ $finalName = time().rand().'.'.$request->image->extension();
 
 $data['password'] = bcrypt($data['password']);
 
-$op = user::create($data);
+$op = userModel::create($data);
 
 if($op){
     $message = "user Registered";
@@ -93,7 +94,7 @@ return back();
     public function edit($id)
     {
 
-      $data = student::where('id',$id)->get();
+      $data = userModel::where('id',$id)->get();
 
       return view('student.edit',['data' => $data]);    }
 
@@ -117,7 +118,7 @@ return back();
      */
     public function destroy($id)
     {
-        auth()->logout();
+        // auth()->logout();
 
         return redirect(url('/Login'));    }
 }
