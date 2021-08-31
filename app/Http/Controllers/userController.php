@@ -38,7 +38,8 @@ class userController extends Controller
     {
 //
 $data = $this->validate($request,[
-    "name" => "required",
+    "Fname" => "required",
+    "Lname" => "required",
     "email" => "required|email",
     "password" => "required|min:6",
     "image"    => "required|image|mimes:png,jpeg,jpg,gif",

@@ -33,7 +33,7 @@
                                     <i class="material-icons">person</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="firstName" placeholder="First Name" autofocus>
+                                    <input type="text" class="form-control" name="Fname" placeholder="First Name" autofocus>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                                     <i class="material-icons">person</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text" class="form-control" name="lastName" placeholder="LastName">
+                                    <input type="text" class="form-control" name="Lname" placeholder="LastName">
                                 </div>
                             </div>
                         </div>
