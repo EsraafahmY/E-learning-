@@ -1,10 +1,10 @@
 @include('shared.header');
-@include('shared.nav');
-@include('shared.sidNav');
+
 <section class="content">
     <div class="container-fluid">
         <div class="row clearfix">
         <body class="signup-page">
+
         @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -121,22 +121,13 @@
                                 <span class="input-group-addon">
                                     <i class="material-icons">assignment_ind</i>
                                 </span>
-                                <select name="role_id" class="form-control bootstrap-select show-tick">
+                                <select name="roleID" class="form-control bootstrap-select show-tick">
                                     <option value="">-- Register as --</option>
-                                    <?php
-
-                                    while ($rows = mysqli_fetch_assoc($op)) {
-                                        if ($rows['ID'] == 0)
-                                            continue;
-                                     ?>
-
-                                        <option value="<?php echo $rows['ID']; ?>"> <?php echo ucfirst($rows['title']); ?></option>
-
-                                    <?php
-                                    }
-                                    ?>
-
+                                        @foreach($data as $value)
+                                         <option value="{{ $value->ID }}">{{ $value->title }} </option> 
+                                        @endforeach
                                 </select>
+                           
                             </div>
                         </div>
                     </div>
@@ -154,7 +145,7 @@
                     <button class="btn btn-block btn-lg btn-success waves-effect" type="submit">SIGN UP</button>
 
                     <div class="m-t-25 m-b--5 align-center">
-                        <a href="index.php">You already have a membership?</a>
+                        <a href="{{ url('Login') }}">You already have a membership?</a>
                     </div>
                 </form>
             </div>

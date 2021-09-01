@@ -1,10 +1,18 @@
 @include('shared.header');
-@include('shared.nav');
-@include('shared.sidNav');
 <section class="content">
     <div class="container-fluid">
         <div class="row clearfix">
         <body class="login-page">
+
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="login-box">
         <div class="logo">
             <a href="javascript:void(0);"><b>Bit</b> by <b>Bit</b></a>
@@ -12,7 +20,7 @@
         </div>
         <div class="card">
             <div class="body">
-                <form id="sign_in" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+                <form id="sign_in" method="POST" action="{{ url('/doLogin') }}" enctype="multipart/form-data">
                     <div class="msg">Sign in to start your session</div>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -32,9 +40,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-8 p-t-5">
-                            <!-- <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Remember Me</label> -->
+                            <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in chk-col-pink">
+                            <label for="rememberme">Remember Me</label>
                         </div>
+   
                         <div class="col-xs-4">
                             <button class="btn btn-success  waves-effect" type="submit">SIGN IN</button>
                         </div>

@@ -11,6 +11,6 @@ class userModel extends Model
 
     protected  $table = "user";
 
-    protected $fillable = ['Fname' , 'Lnme' , 'email','password','phone' ,'address' ,'roleID' ,'img_dir' ,'job' ,'education'];
+    protected $fillable = ['Fname' , 'Lname' , 'email','password','phone' ,'address' ,'roleID' ,'img_dir' ,'job' ,'education'];
  
 }

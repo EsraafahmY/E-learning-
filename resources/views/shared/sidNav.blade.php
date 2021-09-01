@@ -41,13 +41,13 @@
                // if ($userRole == 1) { ?>
                     <li class="header">Admin NAVIGATION</li>
                     <li class="active">
-                        <a href="/NTI/E-learning project/Admins/Admins/index.php">
+                        <a href="{{ url('/Userssss') }}">
                             <i class="material-icons">supervisor_account</i>
                             <span>Users</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/NTI/E-learning project/Admins/AdminRoles/index.php">
+                        <a href="{{ url('/Role') }}">
                             <i class="material-icons">account_box</i>
                             <span>Roles</span>
                         </a>
