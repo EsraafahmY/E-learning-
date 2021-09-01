@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MediaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource('videos', MediaController::class); 
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +26,5 @@ Route::get('/profile', function () {
 Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");
+
+
