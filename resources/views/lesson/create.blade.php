@@ -1,65 +1,8 @@
-<?php
-require '../../helpers/functions.php';
-require '../../helpers/dbConnection.php';
-require '../../shared components/header.php';
-require "../../shared components/nav.php";
-require '../../shared components/sidNav.php';
+@include('shared.header');
+@include('shared.nav');
+@include('shared.sidNav');
 
-$trackID = Sanitize($_GET['trackID'], 1);
-
-
-if (!validate($id, 2)) {
-
-    $_SESSION['messages'] = "invalid id ";
-    header("Location: http://localhost/NTI/E-learning project/Teacher/track/index.php");
-}
-
-
-# Form Logic ... 
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-
-
-
-    // CODE .... 
-
-    $title = CleanInputs($_POST['title']);
-
-    $erros = [];
-    # Validate Input ... 
-    if (!validate($title, 1)) {
-        $erros['title'] = "Title Field Required";
-    }
-
-    if (count($erros) > 0) {
-
-        $_SESSION['messages'] = $erros;
-    } else {
-
-        # db Logic 
-
-
-        $sql = "INSERT INTO `lessons`(`title`, `trackID`) VALUES ( '$title',$trackID)";
-
-        $op = mysqli_query($con, $sql);
-
-        if ($op) {
-            echo "item added";
-            
-            header("Location: index.php?trackID=$trackID");
-        } else {
-            echo mysqli_error($con);
-            exit();
-        }
-        // header("Location: index.php?trackID=$trackID");
-    }
-}
-
-
-?>
-
-
+{{-- $trackID = Sanitize($_GET['trackID'], 1); --}}
 
 <section class="content">
     <div class="container-fluid">
@@ -75,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                     </div>
                     <div class="body">
-                        <form method="post" action="create.php?trackID=<?php echo $trackID;?>" enctype="multipart/form-data">
+                        <form method="post" action="{{ url('/Lesson/') }}" enctype="multipart/form-data">
                             <div class="row clearfix">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
@@ -85,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- trackID --}}
 
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
