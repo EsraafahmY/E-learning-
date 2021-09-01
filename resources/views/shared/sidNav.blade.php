@@ -64,13 +64,13 @@
 
                     <li class="header">Teacher NAVIGATION</li>
                     <li class="active">
-                        <a href="/NTI/E-learning project/Teacher/track/index.php">
+                        <a href="{{ url('/Track') }}">
                             <i class="material-icons">library_books</i>
                             <span>All Tracks</span>
                         </a>
                     </li>
                     <li >
-                        <a href="/NTI/E-learning project/Teacher/track/create.php">
+                        <a href="{{ url('/Track/create') }}">
                             <i class="material-icons">library_add</i>
                             <span>Add Track</span>
                         </a>

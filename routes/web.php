@@ -22,3 +22,5 @@ Route::get('/profile', function () {
 });
 
 Route::resource('User',"userController");
+
+Route::resource('Track',"trackController");
