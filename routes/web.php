@@ -27,4 +27,6 @@ Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");
 
+Route::resource('Role',"roleController");
+
 
