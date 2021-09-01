@@ -1,7 +1,6 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MediaController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,11 +12,11 @@ use App\Http\Controllers\MediaController;
 |
 */
 
-Route::resource('videos', MediaController::class); 
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('videos', "MediaController"); 
 
 Route::get('/profile', function () {
     return view('profile');

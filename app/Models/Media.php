@@ -8,10 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     use HasFactory;
-    protected  $table = "lessons";
 
-    protected $fillable = [
-        'video',
-
-    ];
+    protected $fillable = ['file_name'];
 }
