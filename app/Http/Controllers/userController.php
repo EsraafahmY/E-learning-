@@ -16,9 +16,11 @@ class userController extends Controller
      */
     public function index()
     {
-      $data = userModel::paginate(5);
+         $data = userModel::select('user.*', 'role.title as title')
+            ->join('role', 'role.ID', '=', 'user.roleID')
+            ->paginate(50);
 
-      return view('login');
+      return view('/users.index' , ['data' => $data]);
     }
 
     /**
@@ -41,9 +43,7 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        // $roles = roleModel::join('user', 'user.roleID', '=', 'role.ID')
-        //     ->join('role', 'role.ID', '=', 'user.roleID')
-        //     ->get(['role.title']);
+    
 $data = $this->validate($request,[
     "Fname" => "required",
     "Lname" => "required",
