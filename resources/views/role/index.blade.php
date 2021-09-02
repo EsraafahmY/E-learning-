@@ -19,7 +19,19 @@
                         <h2>
                             All roles
                         </h2>
+                        @if (session()->get('user')->roleID == 1)
 
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+
+                         <a href='{{ url('/Role/create') }}'
+                                        class=' btn btn-warning m-r-1em '>Add New Role</a> 
+                                        @endif
                     </div>
                 </div>
                 @if (!isset($data))
@@ -36,9 +48,9 @@
                                     </h2>
                                 </div>
                                 <div class="body align-right">
-                                    <a href='{{ url('/Lesson/' . $value->ID) }}'
-                                        class=' btn btn-warning m-r-1em '>Show</a>
-                                    <a href=' {{ url('/Track/' . $value->ID . '/edit') }}'
+                                    <!-- <a href='{{ url('/Lesson/' . $value->ID) }}'
+                                        class=' btn btn-warning m-r-1em '>Show</a> -->
+                                    <a href=' {{ url('/Role/' . $value->ID . '/edit') }}'
                                         class='btn btn-primary m-r-1em'>Edit</a>
 
                                     <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"
@@ -62,10 +74,10 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        Delete {{ $value->name }} !!!!
+                                        Delete {{ $value->title }} !!!!
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="{{ url('/Track/' . $value->ID) }}" method="post">
+                                        <form action="{{ url('/Role/' . $value->ID) }}" method="post">
 
                                             @method('delete') {{-- <input type="hidden" value="delete" name="_method"> --}}
                                             @csrf {{-- <input type="hidden" value="{{ csrf_tokken() }}" name="_token"> --}}

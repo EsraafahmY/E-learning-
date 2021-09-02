@@ -11,12 +11,12 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            update track
+                            update Role
                         </h2>
 
                     </div>
                     <div class="body">
-                        <form method="post" action="{{ url('/Track/' . $data[0]->ID) }}"
+                        <form method="post" action="{{ url('/Role/' . $data[0]->ID) }}"
                             enctype="multipart/form-data">
 
                             @method('put')
@@ -28,7 +28,7 @@
                                         <div class="form-line">
                                             <input type="text" class="form-control" name="title"
                                                 value="{{ $data[0]->title }}">
-                                            <label class="form-label">Track Title</label>
+                                            <label class="form-label">Role Title</label>
                                         </div>
                                     </div>
                                 </div>

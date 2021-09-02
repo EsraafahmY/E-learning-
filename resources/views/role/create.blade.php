@@ -11,25 +11,25 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Add new track
+                            Add new Role
                         </h2>
 
                     </div>
                     <div class="body">
-                        <form method="post" action="{{ url('/Track') }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ url('/Role') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row clearfix">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
                                             <input type="text" class="form-control" name="title">
-                                            <label class="form-label">Track Title</label>
+                                            <label class="form-label">Role Title</label>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- <input type="hidden" value="{{ auth()->user()->ID }}" name="teacherID"> --}}
-                                <input type="hidden" value="1" name="teacherID">
+                                <input type="hidden" value="1" name="RoleId">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                                     <button type="submit"
