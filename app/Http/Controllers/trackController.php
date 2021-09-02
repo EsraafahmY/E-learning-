@@ -161,7 +161,11 @@ class trackController extends Controller
             return redirect(url('/Track/'.session()->get('user')->ID));
         }else{
             return redirect(url('/Track'));
-        }
+        }       
     
+    }
+
+    public function yourTracks(){
+        return view('track.studentTraks');
     }
 }

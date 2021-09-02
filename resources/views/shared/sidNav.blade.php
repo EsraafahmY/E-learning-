@@ -77,7 +77,7 @@
                     </li>
                     <li>
                         {{-- some edit her --}}
-                        <a href="{{ url('/Track/create') }}">
+                        <a href="{{ url('yourTracks') }}">
                             <i class="material-icons">library_books</i>
                             <span>My Tracks</span>
                         </a>
