@@ -1,6 +1,6 @@
-@include('shared.header');
-@include('shared.nav');
-@include('shared.sidNav');
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 {{-- $trackID = Sanitize($_GET['trackID'], 1); --}}
 
@@ -69,8 +69,4 @@
     </div>
 </section>
 
-
-<?php
-
-require '../../shared components/footer.php';
-?>
+@include('shared.footer')

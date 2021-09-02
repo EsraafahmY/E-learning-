@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\MediaController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 Route::resource('videos', "MediaController"); 
 

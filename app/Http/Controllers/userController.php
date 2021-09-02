@@ -16,11 +16,11 @@ class userController extends Controller
      */
     public function index()
     {
-         $data = userModel::select('user.*', 'role.title as title')
-            ->join('role', 'role.ID', '=', 'user.roleID')
+        $data = userModel::select('users.*', 'role.title as title')
+            ->join('role', 'role.ID', '=', 'users.roleID')
             ->paginate(50);
 
-      return view('/users.index' , ['data' => $data]);
+        return view('/users.index', ['data' => $data]);
     }
 
     /**
@@ -43,45 +43,45 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-    
-$data = $this->validate($request,[
-    "Fname" => "required",
-    "Lname" => "required",
-    "email" => "required|email",
-    "password" => "required|min:6",
-    // "image"    => "image|mimes:png,jpeg,jpg,gif",
-    "address" => "required",
-    "phone" => "required|min:11|numeric",
-    "roleID" => "required"
-]);
 
-# upload image ... 
+        $data = $this->validate($request, [
+            "Fname" => "required",
+            "Lname" => "required",
+            "email" => "required|email",
+            "password" => "required|min:6",
+            // "image"    => "image|mimes:png,jpeg,jpg,gif",
+            "address" => "required",
+            "phone" => "required|min:11|numeric",
+            "roleID" => "required"
+        ]);
 
-$finalName = time().rand().'.'.$request->image->extension();
+        # upload image ... 
 
-    $request->image->move(public_path('images'),$finalName);
-    // $request->image->storeAs('images',$finalName);
+        $finalName = time() . rand() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images'), $finalName);
+        // $request->image->storeAs('images',$finalName);
 
 
-$data['password'] = bcrypt($data['password']);
+        $data['password'] = bcrypt($data['password']);
 
-$data['img_dir'] ='/images/' . $finalName;
-// dd($data);
+        $data['img_dir'] = '/images/' . $finalName;
+        // dd($data);
 
-$op = userModel::create($data);
+        $op = userModel::create($data);
 
-if($op){
-    $message = "user Registered";
-}else{
-    $message = "Error Try Again";
-}
+        if ($op) {
+            $message = "user Registered";
+        } else {
+            $message = "Error Try Again";
+        }
 
-session()->flash('Message',$message);
+        session()->flash('Message', $message);
 
- return redirect(url('/User'));
+        return redirect(url('/User'));
 
-// return back();
- }
+        // return back();
+    }
 
     /**
      * Display the specified resource.
@@ -103,9 +103,10 @@ session()->flash('Message',$message);
     public function edit($id)
     {
 
-      $data = userModel::where('id',$id)->get();
+        $data = userModel::where('ID', $id)->get();
 
-      return view('student.edit',['data' => $data]);    }
+        return view('users.profile', ['data' => $data]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -127,47 +128,45 @@ session()->flash('Message',$message);
      */
     public function destroy($id)
     {
-        return redirect(url('Login'));  
-      }
-
-      public function login(){
-        return view('login');
-    } 
- 
-    public function doLogin(Request $request){
-
-     $data = $this->validate($request,[
-         
-         "email" => "required|email",
-         "password" => "required|min:6"
-     ]);
- 
-     $status = false;
-     if($request->has('rememberMe')){
-      $status = true;
-        } 
- 
-       if(auth()->guard('User')->attempt($data,$status)){
- 
- 
-         return redirect(url(''));
- 
-       }else{
- 
-         session()->flash('Message','Invalid Credentials try again');
-         return redirect(url('Login'));
- 
-       }
- 
-     
- 
+        return redirect(url('Login'));
     }
- 
- 
-    public function logout(){
- 
-     auth()->logout();
- 
-     return redirect(url('Login'));
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function doLogin(Request $request)
+    {
+
+        $data = $this->validate($request, [
+
+            "email" => "required|email",
+            "password" => "required|min:6"
+        ]);
+
+        $status = false;
+        if ($request->has('rememberMe')) {
+            $status = true;
+        }
+
+        if (auth()->attempt($data, $status)) {
+
+
+            return redirect(url(''));
+        } else {
+
+            session()->flash('Message', 'Invalid Credentials try again');
+            return redirect(url('Login'));
+        }
+    }
+
+
+    public function logout()
+    {
+
+        auth()->logout();
+
+        return redirect(url('Login'));
     }
 }

@@ -1,4 +1,4 @@
-@include('shared.header');
+@include('shared.header')
 
 <section class="content">
     <div class="container-fluid">
@@ -155,4 +155,4 @@
         </div>
     </div>
 </section>
-@include('shared.footer');
+@include('shared.footer')
