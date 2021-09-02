@@ -28,7 +28,7 @@
         </ul>
     </div>
 @endif
-                        <form method="post" action="{{ url('/Role/'. $data[0]->ID) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ url('/User/'. $data[0]->ID) }}" enctype="multipart/form-data">
                         @method('put')
                             @csrf
                             <div class="row clearfix">
@@ -38,7 +38,7 @@
                                         <div class="">
                                             <div class="demo-radio-button pull-right">
 
-                                            @foreach ($data as $key => $value)
+                                            @foreach ($roles as $key => $value)
                                         @if ($value->ID == 1)
                                             @continue
                                         @endif

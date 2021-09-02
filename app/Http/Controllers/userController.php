@@ -107,8 +107,11 @@ class userController extends Controller
     {
 
         $data = userModel::where('ID', $id)->get();
+        $roles = roleModel::get();
 
-        return view('users.profile', ['data' => $data]);
+        // dd($data);
+
+        return view('users.editUserRole', ['data' => $data , 'roles' => $roles]);
     }
 
     /**
@@ -120,7 +123,27 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $this->validate($request,[
+       
+            "roleID"  => "required",
+      
+           ]);
+      
+      
+           $op = userModel::where('ID',$id)->update(["RoleID" => $request->roleID]);
+      
+      
+            if($op){
+                $message = "Record Updated";
+            }else{
+                $message = "Error Try Again";
+            }
+
+
+            session()->flash('Message',$message);
+
+            return redirect(url('/User'));
+
     }
 
     /**
@@ -195,4 +218,38 @@ class userController extends Controller
 
         return redirect(url('/'));
     }
+
+    public function editRole($id)
+    {
+
+        $data = userModel::where('ID', $id)->get();
+
+        return view('users.editUserRole', ['data' => $data]);
+    }
+
+    public function updateUserRole(Request $request, $id)
+    {
+        $data = $this->validate($request,[
+       
+            "roleID"  => "required",
+      
+           ]);
+      
+      
+           $op = userModel::where('ID',$id)->update(["RoleID" => $request->roleID]);
+      
+      
+            if($op){
+                $message = "Record Updated";
+            }else{
+                $message = "Error Try Again";
+            }
+
+
+            session()->flash('Message',$message);
+
+            return redirect(url('/User'));
+
+    }
+
 }

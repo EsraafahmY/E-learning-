@@ -15,7 +15,7 @@ class roleController extends Controller
      */
     public function index()
     {
-        $data = roleModel::paginate(10);
+        $data = roleModel::paginate(100);
 
         return view('/role.index',['data' => $data]);   
      }
@@ -78,8 +78,9 @@ class roleController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+        $data = roleModel::get();
+
+        return view('role.edit', ['data' => $data]);    }
 
     /**
      * Update the specified resource in storage.
@@ -90,7 +91,27 @@ class roleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $this->validate($request,[
+       
+            "title"  => "required",
+      
+           ]);
+      
+      
+           $op = roleModel::where('ID',$id)->update(["title" => $request->title]);
+      
+      
+            if($op){
+                $message = "Record Updated";
+            }else{
+                $message = "Error Try Again";
+            }
+
+
+            session()->flash('Message',$message);
+
+            return redirect(url('/Role'));
+
     }
 
     /**
@@ -102,5 +123,30 @@ class roleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $this->validate($request,[
+       
+            "title"  => "required",
+      
+           ]);
+      
+      
+           $op = roleModel::where('ID',$id)->update(["title" => $request->title]);
+      
+      
+            if($op){
+                $message = "Record Updated";
+            }else{
+                $message = "Error Try Again";
+            }
+
+
+            session()->flash('Message',$message);
+
+            return redirect(url('/Role'));
+
     }
 }
