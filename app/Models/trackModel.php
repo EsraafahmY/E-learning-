@@ -17,4 +17,9 @@ class trackModel extends Model
         'title'
 
     ];
+
+    public function track_data(){
+
+        return  $this->belongsTo('App\Models\userModel','teacherID','ID');
+      }
 }

@@ -35,15 +35,26 @@
                                         {{ $value->title }}
                                     </h2>
                                 </div>
-                                <div class="body align-right">
-                                    <a href='{{ url('/Lesson/' . $value->ID) }}'
-                                        class=' btn btn-warning m-r-1em '>Show</a>
-                                    <a href=' {{ url('/Track/' . $value->ID . '/edit') }}'
-                                        class='btn btn-primary m-r-1em'>Edit</a>
+                                <div class="body ">
 
-                                    <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"
-                                        class='btn btn-danger m-r-1em'>Delete</a>
 
+                                    @if (session()->get('user')->roleID !== 2)
+                                        <p>Inistructor:
+                                            {{ $value->track_data->Fname . ' ' . $value->track_data->Lname }}</p>
+                                    @endif
+                                    <p>updated_at: {{ $value->updated_at }}</p>
+                                    <p>created_at: {{ $value->created_at }}</p>
+
+                                    <div class="align-right">
+                                        <a href='{{ url('/Lesson/' . $value->ID) }}'
+                                            class=' btn btn-warning m-r-1em '>Show</a>
+                                        <a href=' {{ url('/Track/' . $value->ID . '/edit') }}'
+                                            class='btn btn-primary m-r-1em'>Edit</a>
+
+                                        <a href='' data-toggle="modal"
+                                            data-target="#modal_single_del{{ $key }}"
+                                            class='btn btn-danger m-r-1em'>Delete</a>
+                                    </div>
 
                                 </div>
                             </div>
