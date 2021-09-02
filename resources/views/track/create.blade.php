@@ -1,6 +1,6 @@
-@include('shared.header');
-@include('shared.nav');
-@include('shared.sidNav');
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 <section class="content">
     <div class="container-fluid">
@@ -28,8 +28,8 @@
                                     </div>
                                 </div>
 
-                                {{-- <input type="hidden" value="{{ auth()->user()->ID }}" name="teacherID"> --}}
-                                <input type="hidden" value="1" name="teacherID">
+                                <input type="hidden" value="{{ session()->get('user')->ID }}" name="teacherID">
+                                {{-- <input type="hidden" value="1" name="teacherID"> --}}
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                                     <button type="submit"
@@ -71,4 +71,4 @@
 </section>
 
 
-@include('shared.footer');
+@include('shared.footer')

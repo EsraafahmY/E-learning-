@@ -1,23 +1,24 @@
-
-
 <section>
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                {{-- {{url().'/images/'}} --}}
-                <img src="{{ session()->get('img_dir') }}" width="48" height="48" alt="User" />
+                <img src="{{ url(session()->get('user')->img_dir) }}" width="48" height="48" alt="User" />
+
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{{ session()->get('Fname') }} . ' ' . {{ session()->get('Lname') }}</div>
-                <div class="email">{{ session()->get('email') }}</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ session()->get('user')->Fname . ' ' . session()->get('user')->Lname }}</div>
+
+                <div class="email">{{ session()->get('user')->email }}</div>
                 <div class="btn-group user-helper-dropdown">
-                    <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                    <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="{{ url('User/profile') }}"><i class="material-icons">person</i>Profile</a></li>
+                        <li><a href="{{ url('profile') }}"><i class="material-icons">person</i>Profile</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('User/logout') }}"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="{{ url('LogOut') }}"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -26,7 +27,8 @@
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
-                
+
+                @if (session()->get('user')->roleID == 1)
                     <li class="header">Admin NAVIGATION</li>
                     <li class="active">
                         <a href="{{ url('/User') }}">
@@ -41,37 +43,41 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('Track') }}">
+                        <a href="{{ url('/Track') }}">
                             <i class="material-icons">library_books</i>
                             <span>All Tracks</span>
                         </a>
                     </li>
-                <li class="header">Teacher NAVIGATION</li>
+                @elseif(session()->get('user')->roleID == 2)
+                    <li class="header">Teacher NAVIGATION</li>
+                    <li class="active">
+                        <a href="{{ url('/Track/'.session()->get('user')->ID) }}">
+                            <i class="material-icons">library_books</i>
+                            <span>All Tracks</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/Track/create') }}">
+                            <i class="material-icons">library_add</i>
+                            <span>Add Track</span>
+                        </a>
+                    </li>
+                @elseif (session()->get('user')->roleID == 3)
+                    <li class="header">Student NAVIGATION</li>
                     <li class="active">
                         <a href="{{ url('/Track') }}">
                             <i class="material-icons">library_books</i>
                             <span>All Tracks</span>
                         </a>
                     </li>
-                    <li >
+                    <li>
+                        {{-- some edit her --}}
                         <a href="{{ url('/Track/create') }}">
-                            <i class="material-icons">library_add</i>
-                            <span>Add Track</span>
-                        </a>
-                    </li>
-                    <li class="header">Student NAVIGATION</li>
-                    <li class="active">
-                        <a href="/NTI/E-learning project/Student/enroll track/index.php">
-                            <i class="material-icons">library_books</i>
-                            <span>All Tracks</span>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="/NTI/E-learning project/Student/enroll track/mytrack.php">
                             <i class="material-icons">library_books</i>
                             <span>My Tracks</span>
                         </a>
                     </li>
+                @endif
             </ul>
         </div>
         <!-- #Menu -->

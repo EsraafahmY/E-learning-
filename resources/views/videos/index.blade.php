@@ -1,3 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="csrf-token" content="{{csrf_token()}}">
+
+    <title>PDO - Read Records - PHP CRUD Tutorial</title>
+
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+</head>
+<body>
 <div class="row">
 	<div class="col-md-6">
 		<h2>Preview</h2>
@@ -14,6 +28,7 @@
 		<a id="downloadLocalButton" class="btn btn-primary">Download</a>
 	</div>
 </div>
+
 
 
 <script>
@@ -132,3 +147,6 @@
         }, false);
     }
 </script>
+
+</body>
+</html>

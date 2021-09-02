@@ -1,6 +1,6 @@
-@include('shared.header');
-@include('shared.nav');
-@include('shared.sidNav');
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 <section class="content">
     <div class="container-fluid">
@@ -73,4 +73,4 @@
     </div>
 </section>
 
-@include('shared.footer');
+@include('shared.footer')

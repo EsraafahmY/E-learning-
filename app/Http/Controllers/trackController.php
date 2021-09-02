@@ -40,6 +40,7 @@ class trackController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
         $data = $this->validate($request,[
             "title" => "required",
             "teacherID" => "required"
@@ -56,7 +57,12 @@ class trackController extends Controller
  
         session()->flash('Message',$message);
  
-       return redirect(url('/Track'));
+        if(session()->get('user')->roleID==2){
+            return redirect(url('/Track/'.session()->get('user')->ID));
+        }else{
+            return redirect(url('/Track'));
+        }
+    
  
         // return back();
  
@@ -72,6 +78,9 @@ class trackController extends Controller
     public function show($id)
     {
         //
+        $data = trackModel::where('teacherID',$id)->paginate(10);
+
+        return view('track.index',['data' => $data]);
     }
 
     /**

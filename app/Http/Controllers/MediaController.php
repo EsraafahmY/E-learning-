@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class MediaController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,6 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
         $videos = Media::latest()->paginate(5);
 
         return view('videos.index', compact('videos'))
@@ -28,7 +28,6 @@ class MediaController extends Controller
      */
     public function create()
     {
-        //
         return view('videos.form');
     }
 
@@ -40,7 +39,6 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
         if ($request->hasFile('video')) {
 
             $file = $request->file('video');
@@ -58,39 +56,6 @@ class MediaController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Media $media)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -98,9 +63,8 @@ class MediaController extends Controller
      * @param  \App\Models\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $media)
+    public function destroy($media)
     {
-        //
         $media = Media::find($media);
 
         if (isset($media->file_name) && !empty($media->file_name)) {
@@ -112,6 +76,5 @@ class MediaController extends Controller
 
         return redirect()->route('videos.index')
             ->with('success', 'video deleted successfully');
-    
     }
 }
