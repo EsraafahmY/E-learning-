@@ -1,82 +1,6 @@
-<?php
-require '../../helpers/functions.php';
-require '../../helpers/dbConnection.php';
-require '../../shared components/header.php';
-require "../../shared components/nav.php";
-require '../../shared components/sidNav.php';
-
-$id = Sanitize($_GET['lessonID'], 1);
-
-
-if (!validate($id, 2)) {
-
-    $_SESSION['messages'] = "invalid id ";
-    header("Location: http://localhost/NTI/E-learning project/Teacher/track/index.php");
-}
-
-
-# Form Logic ... 
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-
-
-
-    // CODE .... 
-
-    $question = CleanInputs($_POST['question']);
-    $answer1 = CleanInputs($_POST['answer1']);
-    $answer2 = CleanInputs($_POST['answer2']);
-    $answer3 = CleanInputs($_POST['answer3']);
-    $answer4 = CleanInputs($_POST['answer4']);
-
-    $right_answer = $_POST['right_answer'];
-
-    $erros = [];
-    # Validate Input ... 
-    if (!validate($question, 1)) {
-        $erros['question'] = "question Field Required";
-    }
-    if (!validate($answer1, 1)) {
-        $erros['answer1'] = "answer1 Field Required";
-    }
-    if (!validate($answer2, 1)) {
-        $erros['answer2'] = "answer2 Field Required";
-    }
-    if (!validate($answer3, 1)) {
-        $erros['answer3'] = "answer3 Field Required";
-    }
-    if (!validate($answer4, 1)) {
-        $erros['answer4'] = "answer4 Field Required";
-    }
-    if (count($erros) > 0) {
-
-        $_SESSION['messages'] = $erros;
-    } else {
-
-        # db Logic 
-
-
-        $sql = "INSERT INTO `questions`( `question`, `answer1`, `answer2`, `answer3`, `answer4`, `right_answer`, `lessonID`) VALUES ( '$question', '$answer1', '$answer2', '$answer3', '$answer4', $right_answer,$id)";
-
-        $op = mysqli_query($con, $sql);
-
-        if ($op) {
-            echo "question added";
-
-            header("Location: index.php?id=$id");
-        } else {
-            echo mysqli_error($con);
-            exit();
-        }
-        header("Location: index.php?id=$id");
-    }
-}
-
-
-?>
-
-
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 <section class="content">
     <div class="container-fluid">
@@ -92,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                     </div>
                     <div class="body">
-                        <form method="post" action="create.php?lessonID=<?php echo $id; ?>" enctype="multipart/form-data">
+                        <form method="{{ url('/Exam') }}" enctype="multipart/form-data">
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group form-float">
@@ -154,7 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         </div>
                                     </div>
                                 </div>
-
+                                <input type="hidden" value="{{ session()->get('current_lesson') }}" name="lessonID">
+                             
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                                     <button type="submit" class="btn btn-primary btn-block btn-lg m-l-15 pull-right waves-effect">Add</button>
@@ -163,27 +88,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         </form>
                     </div>
 
-                    <?php
-                    # Dispaly error messages .... 
+                    {{-- # Dispaly error messages .... --}}
 
-                    if (isset($_SESSION['messages'])) {
-                        foreach ($_SESSION['messages'] as  $value) {
-                            # code...
-                            echo '
-                            <div class="form-group form-float">
-                                    <div class="form-line focused error">
-                                        <input type="text" class="form-control" name="error" value="' . $value . '" >
-                                    </div>
-                                </div>
-                            
-                            
-                            ';
-                        }
+                    @if (session()->get('Message') !== null)
+                        <div class="alert alert-info">
+                            {{ session()->get('Message') }}
+                        </div>
 
-                        unset($_SESSION['messages']);
-                    }
+                    @endif
 
-                    ?>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                 </div>
             </div>
@@ -194,7 +117,5 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </section>
 
 
-<?php
 
-require '../../shared components/footer.php';
-?>
+@include('shared.footer')

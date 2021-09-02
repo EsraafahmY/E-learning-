@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\questionModel;
 class questionController extends Controller
 {
     /**
@@ -24,6 +25,7 @@ class questionController extends Controller
     public function create()
     {
         //
+        return view('exam.create');
     }
 
     /**
@@ -35,6 +37,29 @@ class questionController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $this->validate($request,[
+            "question" => "required",
+            "answer1" => "required",
+            "answer2" => "required",
+            "answer3" => "required",
+            "answer4" => "required",
+            "right_answer" => "required",
+            "lessonID" => "required",
+        ]);
+ 
+ dd($data);
+        $op = questionModel::create($data);
+ 
+        if($op){
+            $message = "question Added";
+        }else{
+            $message = "Error Try Again";
+        }
+ 
+        session()->flash('Message',$message);
+ 
+        return redirect( url('/ShowLesson/' . session()->get('current_lesson')));
+ 
     }
 
     /**
