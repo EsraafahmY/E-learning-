@@ -97,7 +97,7 @@
     let recorded = document.getElementById("recorded");
     let downloadLocalButton = document.getElementById("downloadLocalButton");
 
-    let recordingTimeMS = 500000; //video limit 500 sec
+    let recordingTimeMS = 10000; //video limit 10 sec
     var localstream;
 
     window.log = function(msg) {

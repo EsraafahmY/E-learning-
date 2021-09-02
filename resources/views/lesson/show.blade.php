@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="header">
                         <h2 class="p-b-15">
-                            {{$lesson[0]->title}}
+                            {{ $lesson[0]->title }}
 
                             @if (session()->get('user')->roleID == 2)
                                 <a href='{{ url('/Exam/create') }}'
@@ -23,15 +23,59 @@
                                     <i class="material-icons">add_box</i>
                                     <span>Add Question</span>
                                 </a>
-                                <a href='{{ url('/Upload_video') }}'
+                                <a href='' data-toggle="modal" data-target="#modal_single"
                                     class='btn btn-info m-r-1em waves-effect pull-right'>
-                                    <i class="material-icons">add_box</i>
+                                    <i class="material-icons">file_upload</i>
                                     <span>Upload Video </span>
                                 </a>
                                 <a href='{{ url('/videos') }}' class='btn btn-brown m-r-1em waves-effect pull-right'>
-                                    <i class="material-icons">add_box</i>
+                                    <i class="material-icons">video_call</i>
                                     <span>Record video</span>
                                 </a>
+                                <div class="modal" id="modal_single" tabindex="-1"
+                                    role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">upload file</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="material-icons">file_upload</i>
+                                                            </span>
+                                                            <div class="form-line">
+                                                                <input type="file" class="form-control"
+                                                                    name="upload_video" placeholder="Add video">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{{ url('/videos/' . $lesson[0]->ID) }}" method="post">
+
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <input type="hidden" value="upload_video" name="flag">
+
+                                                    <div class="not-empty-record">
+                                                        <button type="submit" class="btn btn-primary">upload</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">close</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endif
 
 
