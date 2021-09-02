@@ -92,6 +92,7 @@ class userController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -151,9 +152,18 @@ class userController extends Controller
         }
 
         if (auth()->attempt($data, $status)) {
+            // dd(auth()->user()->img_dir);
 
+            session()->put('user',auth()->user());
 
-            return redirect(url(''));
+            if (auth()->user()->roleID == 1) {
+                return redirect(url('User'));
+            } elseif (auth()->user()->roleID == 2) {
+                return redirect(url('Track/'.auth()->user()->ID));
+                // return redirect(url('temp'));
+            } else {
+                return redirect(url('Track'));
+            }
         } else {
 
             session()->flash('Message', 'Invalid Credentials try again');
@@ -166,6 +176,7 @@ class userController extends Controller
     {
 
         auth()->logout();
+        session()->forget(['user']);
 
         return redirect(url('/'));
     }

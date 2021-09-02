@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,8 +21,13 @@ Route::resource('videos', "MediaController");
 Route::get('/profile', function () {
     return view('profile');
 });
+Route::get('/temp', function () {
+    $user = Auth::user();
+    dd($user);
+})->middleware(['checkAuth']);
 
 Route::post('doLogin','userController@doLogin');
+Route::get('LogOut','userController@logout');
 
 Route::resource('User',"userController");
 
