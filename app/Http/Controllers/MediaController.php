@@ -52,13 +52,64 @@ class MediaController extends Controller
             \Storage::disk('public')->putFileAs($path, $file, $fileNameToStore);
 
             $media = Media::create(['file_name' => $fileNameToStore]);
-            
-            $op = lessonModel::where('ID',session()->get('current_lesson'))->update(["video" => $media->id]);
+
+            $op = lessonModel::where('ID', session()->get('current_lesson'))->update(["video" => $media->id]);
 
             return  response()->json(['success' => ($media) ? 1 : 0, 'message' => ($media) ? 'Video uploaded successfully.' : "Some thing went wrong. Try again !."]);
+        
+        } elseif ($request->hasFile('upload_video')) {
+            # upload image ... 
+
+            $finalName = time() . rand() . '.' . $request->upload_video->extension();
+
+            $request->upload_video->storeAs('videos',$finalName);
+
+            $media = Media::create(['file_name' => $finalName]);
+
+            $op = lessonModel::where('ID', session()->get('current_lesson'))->update(["video" => $media->id]);
+
+            
+            // dd($data);
+
+            if ($op) {
+                $message = "user Registered";
+            } else {
+                $message = "Error Try Again";
+            }
+
+            session()->flash('Message', $message);
+
+            return redirect( url('/ShowLesson/' . session()->get('current_lesson')));
         }
     }
 
+
+    #update video
+
+    public function update(Request $request, $id)
+    {
+        //
+        $data = $this->validate($request, [
+
+            "title"  => "required",
+
+        ]);
+
+
+        $op = lessonModel::where('ID', $id)->update(["title" => $request->title]);
+
+
+        if ($op) {
+            $message = "Record Updated";
+        } else {
+            $message = "Error Try Again";
+        }
+
+
+        session()->flash('Message', $message);
+
+        return redirect(url('/Lesson/' . session()->get('current_track')));
+    }
 
     /**
      * Remove the specified resource from storage.
