@@ -1,132 +1,11 @@
-<?php
-require 'helpers/functions.php';
-require 'helpers/dbConnection.php';
-
-require 'shared components/header.php';
-// require "shared components/nav.php";
-require 'shared components/sidNav.php';
-if (isset($_SESSION['user'])) {
-    $userID =  $_SESSION['user']['ID'];
-    $userPassword = $_SESSION['user']['password'];
-
-    $FirstName = $_SESSION['user']['Fname'];
-    $LastName =  $_SESSION['user']['Lnme'];
-    $userName = $_SESSION['user']['Fname'] . ' ' . $_SESSION['user']['Lnme'];
-    $userEmail = $_SESSION['user']['email'];
-    $userRole = $_SESSION['user']['roleID'];
-    $address = $_SESSION['user']['address'];
-    $phone = $_SESSION['user']['phone'];
-    $imgdir = $_SESSION['user']['img_dir'];
-    $education = $_SESSION['user']['education'];
-    $job = $_SESSION['user']['job'];
-    $createdDate = $_SESSION['user']['createdDate'];
-    $d=mktime(11, 14, 54, 8, 12, 2014);
-$modifiedDate = date("Y-m-d h:i:sa", $d);
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $fName  = CleanInputs($_POST['firstName']);
-    $Lname = CleanInputs($_POST['lastName']);
-    $email = CleanInputs($_POST['Email']);
-    $address = CleanInputs($_POST['address']);
-    $phone = CleanInputs($_POST['phone']);
-    $job = CleanInputs($_POST['job']);
-    $education = CleanInputs($_POST['education']);
-    // $createdDate = CleanInputs($_POST['createdDate']);
-    $roleID   =  filter_var($_POST['role_id'], FILTER_SANITIZE_NUMBER_INT);
-    // $createdDate =date("Y-m-d h:i:sa", $d);
-
-    $oldpassword = CleanInputs($_POST['OldPassword']);
-
-    $oldpassword = sha1($oldpassword);
-
-    $newpassword = CleanInputs($_POST['NewPassword']);
-    $newpassword = sha1($newpassword);
-    if($oldpassword == $userPassword && $newpassword != $oldpassword){
-        $sqlup = "update user set password='$newpassword' where ID = $userID";
-        //      echo mysqli_error($con);
-        // exit();
-             $opup =  mysqli_query($con,$sqlup);
-        
-            if($opup){
-        
-                echo 'data updated';
-                // header("Location: shared components/sidNav.php")
-                // header("Location: profile.php");
-        
-            }else{
-                echo mysqli_error($con);
-        
-                echo 'Error Try Again';
-         } 
-    }
-
-if(!empty($_FILES['image']['name'])){
-    $name = $_FILES['image']['name'];
-    $temp = $_FILES['image']['tmp_name'];
-    $size = $_FILES['image']['size'];
-    $type = $_FILES['image']['type'];
-  
-    $nameArray =  explode('/',$type);
-
-    $extension =  strtolower($nameArray[1]);
-  
-    $FinalName = rand().time().'.'.$extension;
-
-    $allowedExt = array('png','jpg','jpeg'); 
-
-    if(in_array($extension,$allowedExt)){
-         $folder = "./uploads/";
-
-         $finalPath = $folder.$FinalName;
-
-        if(move_uploaded_file($temp,$finalPath)){
-
-          // echo 'File Uploaded';
-          unlink($imgdir);
-
-        }else{
-
-          echo 'error try again';
-        }
-    }else{
-
-      echo 'Invalid Extension';
-    }
- }else{
-      // echo 'File Required';
-      $finalPath = $imgdir;
-     }
-     $sqlup = "update user set fname='$fName' , lnme='$Lname' , roleID =$roleID , img_dir='$finalPath',job='$job',education='$education',email='$email',phone='$phone'  where ID = $userID";
-//      echo mysqli_error($con);
-// exit();
-     $opup =  mysqli_query($con,$sqlup);
-
-    if($opup){
-
-        echo 'data updated';
-        // header("Location: shared components/sidNav.php")
-        // header("Location: profile.php");
-
-    }else{
-        echo mysqli_error($con);
-
-        echo 'Error Try Again';
- }  
-    }
-}
-
-
-# Fetch departments 
-// $sql = "select title from role where role)D = $userRole";
-// $op1  = mysqli_query($con, $sql);
-
-
-$sql = "select * from role";
-$op  = mysqli_query($con, $sql);
-?>
-
-    <section class="content">
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+             {{-- our code here --}}
+             <section class="content">
         <div class="container-fluid">
             <div class="row clearfix">
                 
@@ -144,7 +23,7 @@ $op  = mysqli_query($con, $sql);
                                     
 
                                     <div role="tabpanel" class="tab-pane fade in" id="profile_settings">
-                                    <form id="edit" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" class="form-horizontal">
+                                    <form id="edit" method="POST" action="" enctype="multipart/form-data" class="form-horizontal">
 <?php echo $userID;?>
 
                                     <div class="form-group">
@@ -293,10 +172,7 @@ $op  = mysqli_query($con, $sql);
         </div>
     </section>
 
-    <?php
-
-    require 'shared components/footer.php';
-    // session_destroy();
-    // header("Location: index.php");
-
-    ?>
+        </div>
+    </div>
+</section>
+@include('shared.footer')

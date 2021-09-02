@@ -16,7 +16,6 @@
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="{{ url('profile') }}"><i class="material-icons">person</i>Profile</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ url('LogOut') }}"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
@@ -60,6 +59,12 @@
                         <a href="{{ url('/Track/create') }}">
                             <i class="material-icons">library_add</i>
                             <span>Add Track</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('Students') }}">
+                            <i class="material-icons">library_add</i>
+                            <span>All Students</span>
                         </a>
                     </li>
                 @elseif (session()->get('user')->roleID == 3)
