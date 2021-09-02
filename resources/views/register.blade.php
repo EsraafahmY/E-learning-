@@ -145,7 +145,7 @@
                     <button class="btn btn-block btn-lg btn-success waves-effect" type="submit">SIGN UP</button>
 
                     <div class="m-t-25 m-b--5 align-center">
-                        <a href="{{ url('Login') }}">You already have a membership?</a>
+                        <a href="{{ url('User/Login') }}">You already have a membership?</a>
                     </div>
                 </form>
             </div>

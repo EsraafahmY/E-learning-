@@ -20,7 +20,7 @@ class userController extends Controller
             ->join('role', 'role.ID', '=', 'user.roleID')
             ->paginate(50);
 
-      return view('/users.index' , ['data' => $data]);
+      return view('/login' , ['data' => $data]);
     }
 
     /**
@@ -78,7 +78,7 @@ if($op){
 
 session()->flash('Message',$message);
 
- return redirect(url('/User'));
+ return redirect(url('/Login'));
 
 // return back();
  }
@@ -130,7 +130,7 @@ session()->flash('Message',$message);
         return redirect(url('Login'));  
       }
 
-      public function login(){
+      public function Login(){
         return view('login');
     } 
  
@@ -146,20 +146,17 @@ session()->flash('Message',$message);
      if($request->has('rememberMe')){
       $status = true;
         } 
- 
-       if(auth()->guard('User')->attempt($data,$status)){
- 
- 
-         return redirect(url(''));
- 
-       }else{
- 
-         session()->flash('Message','Invalid Credentials try again');
-         return redirect(url('Login'));
- 
-       }
- 
-     
+        if(auth()->guard('student')->attempt($data,$status)){
+
+
+            return redirect(url('/User'));
+    
+          }else{
+    
+            session()->flash('Message','Invalid Credentials try again');
+            return redirect(url('/Login'));
+    
+          }
  
     }
  
@@ -168,6 +165,6 @@ session()->flash('Message',$message);
  
      auth()->logout();
  
-     return redirect(url('Login'));
+     return redirect(url('login'));
     }
 }

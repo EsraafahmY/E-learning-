@@ -10,12 +10,12 @@
                 <img src="{{ session()->get('img_dir') }}" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php //echo $userName ?></div>
-                <div class="email"><?php //echo $userEmail ?></div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{{ session()->get('Fname') }} . ' ' . {{ session()->get('Lname') }}</div>
+                <div class="email">{{ session()->get('email') }}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href=""><i class="material-icons">person</i>Profile</a></li>
+                        <li><a href="{{ url('User/profile') }}"><i class="material-icons">person</i>Profile</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ url('User/logout') }}"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
@@ -27,7 +27,6 @@
         <div class="menu">
             <ul class="list">
                 
-                <!-- @if (session()->get('roleID') == 1)  -->
                     <li class="header">Admin NAVIGATION</li>
                     <li class="active">
                         <a href="{{ url('/User') }}">
@@ -42,13 +41,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url(Track) }}">
+                        <a href="{{ url('Track') }}">
                             <i class="material-icons">library_books</i>
                             <span>All Tracks</span>
                         </a>
                     </li>
-                    <!-- @endif -->
-                 <!-- @elseif(session()->get('roleID')  == 2)  -->
                 <li class="header">Teacher NAVIGATION</li>
                     <li class="active">
                         <a href="{{ url('/Track') }}">
@@ -62,8 +59,6 @@
                             <span>Add Track</span>
                         </a>
                     </li>
-               <!-- @endif -->
-            <!-- @elseif (session()->get('roleID')  == 3)  -->
                     <li class="header">Student NAVIGATION</li>
                     <li class="active">
                         <a href="/NTI/E-learning project/Student/enroll track/index.php">
@@ -77,7 +72,6 @@
                             <span>My Tracks</span>
                         </a>
                     </li>
-        <!-- <@endif -->
             </ul>
         </div>
         <!-- #Menu -->
