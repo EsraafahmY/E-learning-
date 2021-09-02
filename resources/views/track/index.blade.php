@@ -73,7 +73,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        Delete {{ $value->name }} !!!!
+                                        Delete {{ $value->title }} !!!!
                                     </div>
                                     <div class="modal-footer">
                                         <form action="{{ url('/Track/' . $value->ID) }}" method="post">

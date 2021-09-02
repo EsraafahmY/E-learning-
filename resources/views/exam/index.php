@@ -1,36 +1,3 @@
-<?php
-require '../../helpers/functions.php';
-require '../../helpers/dbConnection.php';
-require '../../shared components/header.php';
-require "../../shared components/nav.php";
-require '../../shared components/sidNav.php';
-
-
-$id = Sanitize($_GET['id'], 1);
-
-
-if (!validate($id, 2)) {
-
-    $_SESSION['messages'] = "invalid id ";
-    header("Location: ../track/index.php");
-}
-
-
-$no_questions = true;
-
-$sql = "SELECT * FROM `questions` WHERE `lessonID` = $id";
-
-$op = mysqli_query($con, $sql);
-
-if (mysqli_num_rows($op) > 0) {
-    // code 
-    $no_questions = false;
-}
-
-mysqli_close($con);
-
-?>
-
 
 <section class="content">
     <div class="container-fluid">

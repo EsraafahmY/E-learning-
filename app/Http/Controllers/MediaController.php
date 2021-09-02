@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Media;
+use App\Models\lessonModel;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller
@@ -51,6 +52,8 @@ class MediaController extends Controller
             \Storage::disk('public')->putFileAs($path, $file, $fileNameToStore);
 
             $media = Media::create(['file_name' => $fileNameToStore]);
+            
+            $op = lessonModel::where('ID',session()->get('current_lesson'))->update(["video" => $media->id]);
 
             return  response()->json(['success' => ($media) ? 1 : 0, 'message' => ($media) ? 'Video uploaded successfully.' : "Some thing went wrong. Try again !."]);
         }
