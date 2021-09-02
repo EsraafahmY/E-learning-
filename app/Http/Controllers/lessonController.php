@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\lessonModel;
 
 class lessonController extends Controller
 {
@@ -24,6 +25,7 @@ class lessonController extends Controller
     public function create()
     {
         //
+        return view('lesson.create');
     }
 
     /**
@@ -35,6 +37,24 @@ class lessonController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $this->validate($request,[
+            "title" => "required",
+            "trackID" => "required"
+        ]);
+ 
+ 
+        $op = lessonModel::create($data);
+ 
+        if($op){
+            $message = "Lesson Added";
+        }else{
+            $message = "Error Try Again";
+        }
+ 
+        session()->flash('Message',$message);
+ 
+        return redirect(url('/Lesson/'.session()->get('current_track')));
+        
     }
 
     /**
@@ -46,6 +66,10 @@ class lessonController extends Controller
     public function show($id)
     {
         //
+        session()->put('current_track', $id);
+         $data = lessonModel::where('trackID',$id)->paginate(10);
+
+        return view('lesson.index',['data' => $data]);
     }
 
     /**
@@ -57,6 +81,9 @@ class lessonController extends Controller
     public function edit($id)
     {
         //
+        $data = lessonModel::where('ID',$id)->get();
+// dd($data);
+        return view('lesson.edit',['data' => $data]);
     }
 
     /**
@@ -69,6 +96,27 @@ class lessonController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $data = $this->validate($request,[
+       
+            "title"  => "required",
+      
+           ]);
+      
+      
+           $op = lessonModel::where('ID',$id)->update(["title" => $request->title]);
+      
+      
+            if($op){
+                $message = "Record Updated";
+            }else{
+                $message = "Error Try Again";
+            }
+
+
+            session()->flash('Message',$message);
+
+            return redirect(url('/Lesson/'.session()->get('current_track')));
+
     }
 
     /**
@@ -80,5 +128,19 @@ class lessonController extends Controller
     public function destroy($id)
     {
         //
+        $op = lessonModel::where('ID',$id)->delete();
+
+        if($op){
+            $message =  "Track Deleted";
+
+        }
+        else{
+            $message = "Error Try Again";
+        }
+
+         session()->flash('Message',$message);
+
+        //  return redirect(url('/Lesson/'.session()->get('current_track')));
+        return back();
     }
 }

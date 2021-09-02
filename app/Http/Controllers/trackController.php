@@ -50,7 +50,7 @@ class trackController extends Controller
         $op = trackModel::create($data);
  
         if($op){
-            $message = "Track Registered";
+            $message = "Track Added";
         }else{
             $message = "Error Try Again";
         }
@@ -126,7 +126,12 @@ class trackController extends Controller
 
             session()->flash('Message',$message);
 
-            return redirect(url('/Track'));
+            if(session()->get('user')->roleID==2){
+                return redirect(url('/Track/'.session()->get('user')->ID));
+            }else{
+                return redirect(url('/Track'));
+            }
+        
 
 
     }
@@ -152,6 +157,11 @@ class trackController extends Controller
 
          session()->flash('Message',$message);
 
-        return redirect(url('/Track'));
+         if(session()->get('user')->roleID==2){
+            return redirect(url('/Track/'.session()->get('user')->ID));
+        }else{
+            return redirect(url('/Track'));
+        }
+    
     }
 }

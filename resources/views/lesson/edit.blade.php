@@ -1,77 +1,6 @@
-<?php
-
-require '../../helpers/functions.php';
-require '../../helpers/dbConnection.php';
-
-
-# Validate & Sanitize id 
-
-$id = Sanitize($_GET['id'], 1);
-
-$trackID = Sanitize($_GET['trackID'], 1);
-
-if (!validate($id, 2)) {
-
-    $_SESSION['messages'] = "invalid id ";
-    header("Location: index.php");
-}
-
-
-
-
-
-# Form Logic ... 
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-    // CODE .... 
-
-    $title = CleanInputs($_POST['title']);
-
-    $erros = [];
-    # Validate Input ... 
-    if (!validate($title, 1)) {
-        $erros['title'] = "Title Field Required";
-    }
-
-    if (count($erros) > 0) {
-
-        $_SESSION['errormessages'] = $erros;
-    } else {
-
-        # db Logic 
-        $sql = "UPDATE `lessons` SET `title`='$title' WHERE `ID`= $id";
-        $op = mysqli_query($con, $sql);
-
-        if ($op) {
-
-            $_SESSION['messages'] = 'Record Updated';
-
-            header("Location: index.php?trackID=$trackID");
-        } else {
-            $_SESSION['messages'] = mysqli_error($con);
-            $_SESSION['errormessages'] = ['error try again'];
-        }
-    }
-}
-
-
-
-# Fetch data ... 
-$sql  = "select * from lessons where ID=$id";
-$op   = mysqli_query($con, $sql);
-$data = mysqli_fetch_assoc($op);
-
-
-
-
-require '../../shared components/header.php';
-require "../../shared components/nav.php";
-require '../../shared components/sidNav.php';
-
-?>
-
-
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 <section class="content">
     <div class="container-fluid">
@@ -87,12 +16,16 @@ require '../../shared components/sidNav.php';
 
                     </div>
                     <div class="body">
-                        <form method="post" action="edit.php?id=<?php echo $data['ID'];?>&trackID=<?php echo $trackID;?>" enctype="multipart/form-data">
+                        
+                        <form method="post" action="{{ url('/Lesson/' . $data[0]->ID) }}" enctype="multipart/form-data">
                             <div class="row clearfix">
+                                @method('put')
+                                @csrf
+    
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="title" value="<?php echo $data['title']; ?>">
+                                            <input type="text" class="form-control" name="title" value="{{ $data[0]->title }}">
                                             <label class="form-label">Lesson Title</label>
                                         </div>
                                     </div>
@@ -106,27 +39,27 @@ require '../../shared components/sidNav.php';
                         </form>
                     </div>
 
-                    <?php
-                    # Dispaly error messages .... 
+                    {{-- # Dispaly error messages .... --}}
 
-                    if (isset($_SESSION['messages'])) {
-                        foreach ($_SESSION['messages'] as  $value) {
-                            # code...
-                            echo '
-                            <div class="form-group form-float">
-                                    <div class="form-line focused error">
-                                        <input type="text" class="form-control" name="error" value="' . $value . '" >
-                                    </div>
-                                </div>
-                            
-                            
-                            ';
-                        }
+                    @if (session()->get('Message') !== null)
+                        <div class="alert alert-info">
+                            {{ session()->get('Message') }}
+                        </div>
 
-                        unset($_SESSION['messages']);
-                    }
+                    @endif
 
-                    ?>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+
 
                 </div>
             </div>
@@ -135,9 +68,4 @@ require '../../shared components/sidNav.php';
 
     </div>
 </section>
-
-
-<?php
-
-require '../../shared components/footer.php';
-?>
+@include('shared.footer')
