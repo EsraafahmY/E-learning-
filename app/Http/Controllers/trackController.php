@@ -15,7 +15,7 @@ class trackController extends Controller
     public function index()
     {
         //
-        $data = trackModel::paginate(10);
+        $data = trackModel::with('track_data')->paginate(10);
 
         return view('track.index',['data' => $data]);
     }
