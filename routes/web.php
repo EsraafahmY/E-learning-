@@ -21,10 +21,7 @@ Route::resource('videos', "MediaController");
 Route::get('/profile', function () {
     return view('profile');
 });
-Route::get('/temp', function () {
-    $user = Auth::user();
-    dd($user);
-})->middleware(['checkAuth']);
+
 
 Route::post('doLogin','userController@doLogin');
 Route::get('LogOut','userController@logout');
@@ -32,6 +29,8 @@ Route::get('LogOut','userController@logout');
 Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");
+Route::resource('Lesson',"lessonController");
+Route::resource('Exam',"questionController");
 
 Route::resource('Role',"roleController");
 

@@ -1,46 +1,17 @@
-<?php
-require '../../helpers/functions.php';
-require '../../helpers/dbConnection.php';
-require '../../shared components/header.php';
-require "../../shared components/nav.php";
-require '../../shared components/sidNav.php';
-
-if (isset($_SESSION['user'])) {
-    $userID =  $_SESSION['user']['ID'];
-    $userName = $_SESSION['user']['Fname'] . ' ' . $_SESSION['user']['Lname'];
-    $userEmail = $_SESSION['user']['email'];
-    $userRole = $_SESSION['user']['roleID'];
-}
-
-$trackID = Sanitize($_GET['trackID'], 1);
-
-
-if (!validate($id, 2)) {
-
-    $_SESSION['messages'] = "invalid id ";
-    header("Location: ../track/index.php");
-}
-
-
-$no_lesson = true;
-
-$sql = "SELECT * FROM `lessons` WHERE `trackID` = $trackID";
-
-$op = mysqli_query($con, $sql);
-
-if (mysqli_num_rows($op) > 0) {
-    // code 
-    $no_lesson = false;
-}
-
-mysqli_close($con);
-
-?>
+@include('shared.header')
+@include('shared.nav')
+@include('shared.sidNav')
 
 
 <section class="content">
     <div class="container-fluid">
+        @if (session()->get('Message') !== null)
+            <div class="alert alert-info">
+                {{ session()->get('Message') }}
+            </div>
 
+
+        @endif
         <!-- Inline Layout | With Floating Label -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -49,43 +20,80 @@ mysqli_close($con);
                         <h2 class="p-b-15">
                             All lessons
 
-                            <?php if($userRole == 2) { ?>
-                            <a href='create.php?trackID=<?php echo $trackID; ?>' class='btn btn-warning m-r-1em waves-effect pull-right'>
-                                <i class="material-icons">add_box</i>
-                                <span>Add lesson</span>
-                            </a>
-                            <?php }?>
+                            @if (session()->get('user')->roleID == 2)
+                                <a href='{{ url('/Lesson/create') }}'
+                                    class='btn btn-warning m-r-1em waves-effect pull-right'>
+                                    <i class="material-icons">add_box</i>
+                                    <span>Add lesson</span>
+                                </a>
+                            @endif
+
 
                         </h2>
 
                     </div>
                 </div>
-                <?php
-                if ($no_lesson) {
-                    echo "There are no lessons available";
-                    // 
-                } else {
-                    while ($row = mysqli_fetch_assoc($op)) { ?>
+                @if (!isset($data))
+                    <p>there are no Lessons available</p>
+
+                @else
+                    @foreach ($data as $key => $value)
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="card">
                                 <div class="header bg-green">
                                     <h2>
-                                        <?php echo $row['title']; ?>
+                                        {{ $value->title }}
                                     </h2>
                                 </div>
                                 <div class="body align-right">
-                                    <a href='../exam/index.php?id=<?php echo $row['ID']; ?>' class='btn btn-warning m-r-1em '>Show</a>
+                                    <a href='{{ url('/Exam/' . $value->ID) }}'
+                                        class='btn btn-warning m-r-1em '>Show</a>
 
-                                    <a href='edit.php?id=<?php echo $row['ID']; ?>&trackID=<?php echo $trackID; ?>' class='btn btn-primary m-r-1em'>Edit</a>
-                                    <a href='delete.php?id=<?php echo $row['ID']; ?>&trackID=<?php echo $trackID; ?>' class='btn btn-danger m-r-1em'>Delete</a>
+                                    <a href='{{ url('/Lesson/' . $value->ID . '/edit') }}'
+                                        class='btn btn-primary m-r-1em'>Edit</a>
+                                    <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"
+                                        class='btn btn-danger m-r-1em'>Delete</a>
 
                                 </div>
                             </div>
                         </div>
+                        <div class="modal" id="modal_single_del{{ $key }}" tabindex="-1"
+                            role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">delete confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
 
-                <?php }
-                }
-                ?>
+                                    <div class="modal-body">
+                                        Delete {{ $value->name }} !!!!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{{ url('/Lesson/' . $value->ID) }}" method="post">
+
+                                            @method('delete') {{-- <input type="hidden" value="delete" name="_method"> --}}
+                                            @csrf {{-- <input type="hidden" value="{{ csrf_tokken() }}" name="_token"> --}}
+
+                                            <input type="hidden" value="{{ $value->ID }}" name="id">
+
+                                            <div class="not-empty-record">
+                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    {{ $data->links('pagination.default') }}
+
+                    @endif
             </div>
         </div>
 
@@ -98,8 +106,4 @@ mysqli_close($con);
     </div>
 </section>
 
-
-<?php
-
-require '../../shared components/footer.php';
-?>
+@include('shared.footer')

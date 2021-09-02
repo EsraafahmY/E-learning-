@@ -2,7 +2,6 @@
 @include('shared.nav')
 @include('shared.sidNav')
 
-{{-- $trackID = Sanitize($_GET['trackID'], 1); --}}
 
 <section class="content">
     <div class="container-fluid">
@@ -19,6 +18,7 @@
                     </div>
                     <div class="body">
                         <form method="post" action="{{ url('/Lesson/') }}" enctype="multipart/form-data">
+                            @csrf
                             <div class="row clearfix">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
@@ -28,38 +28,36 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <input type="hidden" value="{{ session()->get('current_track') }}" name="trackID">
                                 {{-- trackID --}}
 
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                                    <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">Add</button>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg m-l-15 waves-effect">Add</button>
                                 </div>
                             </div>
                         </form>
                     </div>
+                    {{-- # Dispaly error messages .... --}}
 
-                    <?php
-                    # Dispaly error messages .... 
+                    @if (session()->get('Message') !== null)
+                        <div class="alert alert-info">
+                            {{ session()->get('Message') }}
+                        </div>
 
-                    if (isset($_SESSION['messages'])) {
-                        foreach ($_SESSION['messages'] as  $value) {
-                            # code...
-                            echo '
-                            <div class="form-group form-float">
-                                    <div class="form-line focused error">
-                                        <input type="text" class="form-control" name="error" value="' . $value . '" >
-                                    </div>
-                                </div>
-                            
-                            
-                            ';
-                        }
+                    @endif
 
-                        unset($_SESSION['messages']);
-                    }
 
-                    ?>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                 </div>
             </div>

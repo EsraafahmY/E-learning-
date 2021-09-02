@@ -18,4 +18,20 @@ class lessonModel extends Model
         'trackID'
 
     ];
+
+    public function track_relation()
+    {
+
+        return  $this->belongsTo('App\Models\trackModel', 'trackID', 'ID');
+    }
+    public function video_relation()
+    {
+
+        return  $this->belongsTo('App\Models\Media', 'video', 'id');
+    }
+    public function questions()
+    {
+
+        return $this->hasMany('App\Models\questionModel', 'lessonID', 'ID');
+    }
 }
