@@ -93,8 +93,9 @@ class userController extends Controller
      */
     public function show($id)
     {
-        //
-        
+        // $data = userModel::where('ID',$id)->paginate(10);
+
+        // return view('users.profile',['data' => $data]);        
     }
 
     /**
@@ -250,6 +251,19 @@ class userController extends Controller
 
             return redirect(url('/User'));
 
+    }
+
+    public function students()
+    {
+        $data = userModel::select('users.*', 'role.title as title')//'user_rate.rate as rate'
+            ->join('role', 'users.roleID', '=', 'role.ID')
+            //->join('user_rate', 'users.ID', '=', 'user_rate.userID')
+            ->where('roleId','3')
+            ->paginate(50);
+// dd($data);
+        // $data = userModel::where('roleId','3')->paginate(50);
+
+        return view('/users.students',['data' => $data]);        
     }
 
 }

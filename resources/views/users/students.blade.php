@@ -28,6 +28,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Type</th>
+                                <!-- <th>Rate</th> -->
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -41,15 +42,13 @@
                                     <td>{{ $value->Fname }} {{ $value->Lname }}</td>
                                     <td>{{ $value->email}}</td>
                                     <td>{{ $value->title }}</td>
-
+                                    <!-- <td>{{ $value->rate }}</td> -->
+                                    <!-- session(['userID' => $value->ID]); -->
                                     <td>
-                                        
-                                    @if($value->roleID == 2)
+                                    <input type="hidden" value="{{ $value->ID }}" name="userID">
+
                                     <a href='{{ url('/Rate/create') }}' class='btn btn-primary m-r-1em'>Rate student</a>           
-                                    @else
-                                        <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"  class='btn btn-danger m-r-1em'>Delete</a>
-                                         <a href='{{ url('/User/'.$value->ID.'/edit') }}' class='btn btn-primary m-r-1em'>Change Role</a>           
-                                   @endif
+                                   
                                         </td>
 
                                 </tr>

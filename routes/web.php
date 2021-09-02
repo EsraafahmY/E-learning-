@@ -27,6 +27,7 @@ Route::get('/profile', function () {
 Route::post('doLogin','userController@doLogin');
 Route::get('LogOut','userController@logout');
 
+
 Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");
@@ -37,5 +38,8 @@ Route::get('ShowLesson/{id}',"lessonController@show_lesson");
 Route::resource('Exam',"questionController");
 
 Route::resource('Role',"roleController");
+Route::resource('Rate',"userRateController");
+Route::get('Students','userController@students');
+
 
 
