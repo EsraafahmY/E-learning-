@@ -43,9 +43,11 @@
                                     <td>{{ $value->email}}</td>
                                     <td>{{ $value->title }}</td>
                                     <!-- <td>{{ $value->rate }}</td> -->
-
+                                    <!-- session(['userID' => $value->ID]); -->
                                     <td>
-                                    <a href='{{ url('/Rate/'.$value->ID.create) }}' class='btn btn-primary m-r-1em'>Rate student</a>           
+                                    <input type="hidden" value="{{ $value->ID }}" name="userID">
+
+                                    <a href='{{ url('/Rate/create') }}' class='btn btn-primary m-r-1em'>Rate student</a>           
                                    
                                         </td>
 

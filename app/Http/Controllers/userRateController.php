@@ -30,6 +30,7 @@ class userRateController extends Controller
         // $data = userModel::select('users.*', 'user_rate as rate')
         // ->join('rate', 'users.ID', '=', 'rate.userID')
         // ->paginate(50);
+        // dd($userID);
         return view('/rate.create');
     }
 
@@ -41,19 +42,21 @@ class userRateController extends Controller
      */
     public function store(Request $request )
     {
-        dd($request);
+        // dd($request);
+        $request->session()->put('userID]','1');
 
         $data = $this->validate($request,[
             "teacherID" => "required",
-            "userID" => "required",
+            // "userID" => "required",
             "rate" => "required"
                 ]);
-                // $data['userID'] = $request.;
+                $data['userID'] = '1';
  
         $op = userRateController::create($data);
  
         if($op){
-            $message = "Track Added";
+            // $message = "Track Added";
+            return back;//view('/students');  
         }else{
             $message = "Error Try Again";
         }
@@ -68,7 +71,8 @@ class userRateController extends Controller
      */
     public function show($id)
     {
-        //
+        // $request->session()->put('user','value');
+        return  back;  
     }
 
     /**
@@ -104,4 +108,6 @@ class userRateController extends Controller
     {
         //
     }
+
+    
 }

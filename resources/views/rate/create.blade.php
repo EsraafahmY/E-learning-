@@ -22,13 +22,14 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="title">
+                                            <input type="text" class="form-control" name="rate">
                                             <label class="form-label">Rate</label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <input type="hidden" value="{{ session()->get('user')->ID }}" name="teacherID">
+
                                 {{-- <input type="hidden" value="1" name="teacherID"> --}}
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
