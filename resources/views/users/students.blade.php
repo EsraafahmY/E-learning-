@@ -7,7 +7,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                <h3>All Users</h3>
+                <h3>All Students</h3>
             </div>
             <div class="card-body">
             @if ($errors->any())
