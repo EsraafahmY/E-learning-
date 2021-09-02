@@ -9,8 +9,6 @@
             <div class="alert alert-info">
                 {{ session()->get('Message') }}
             </div>
-
-
         @endif
         <!-- Inline Layout | With Floating Label -->
         <div class="row clearfix">
@@ -46,7 +44,7 @@
                                     </h2>
                                 </div>
                                 <div class="body align-right">
-                                    <a href='{{ url('/Exam/' . $value->ID) }}'
+                                    <a href='{{ url('/ShowLesson/' . $value->ID) }}'
                                         class='btn btn-warning m-r-1em '>Show</a>
 
                                     <a href='{{ url('/Lesson/' . $value->ID . '/edit') }}'
@@ -70,7 +68,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        Delete {{ $value->name }} !!!!
+                                        Delete {{ $value->title }} !!!!
                                     </div>
                                     <div class="modal-footer">
                                         <form action="{{ url('/Lesson/' . $value->ID) }}" method="post">

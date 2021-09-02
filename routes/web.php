@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('login');
 });
 Route::resource('videos', "MediaController"); 
+Route::get('get-video/{video}', 'lessonController@getVideo')->name('getVideo');
 
 Route::get('/profile', function () {
     return view('profile');
@@ -31,6 +32,9 @@ Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");
 Route::resource('Lesson',"lessonController");
+
+Route::get('ShowLesson/{id}',"lessonController@show_lesson");
+
 Route::resource('Exam',"questionController");
 
 Route::resource('Role',"roleController");

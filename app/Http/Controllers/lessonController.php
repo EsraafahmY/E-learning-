@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\lessonModel;
+use App\Models\Media;
 
 class lessonController extends Controller
 {
@@ -71,6 +72,25 @@ class lessonController extends Controller
 
         return view('lesson.index',['data' => $data]);
     }
+
+
+    public function show_lesson($id){
+
+        session()->put('current_lesson', $id);
+        $lesson = lessonModel::where('ID',$id)->get();
+        $questions_data = lessonModel::find($id)->questions;
+        // dd($questions_data);
+
+        $video = lessonModel::find($id)->video_relation;
+        // dd($video);
+        return view('lesson.show',['lesson'=>$lesson,'questions_data' => $questions_data,'video' => $video]);
+    }
+
+
+
+  
+
+
 
     /**
      * Show the form for editing the specified resource.
