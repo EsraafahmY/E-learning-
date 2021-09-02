@@ -157,7 +157,7 @@ class userController extends Controller
         } else {
 
             session()->flash('Message', 'Invalid Credentials try again');
-            return redirect(url('Login'));
+            return redirect(url('/'));
         }
     }
 
@@ -167,6 +167,6 @@ class userController extends Controller
 
         auth()->logout();
 
-        return redirect(url('Login'));
+        return redirect(url('/'));
     }
 }

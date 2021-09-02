@@ -21,6 +21,8 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
+Route::post('doLogin','userController@doLogin');
+
 Route::resource('User',"userController");
 
 Route::resource('Track',"trackController");

@@ -5,15 +5,6 @@
 
             <body class="login-page">
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="login-box">
                     <div class="logo">
                         <a href="javascript:void(0);"><b>Bit</b> by <b>Bit</b></a>
@@ -23,6 +14,8 @@
                         <div class="body">
                             <form id="sign_in" method="POST" action="{{ url('/doLogin') }}"
                                 enctype="multipart/form-data">
+                                @csrf
+
                                 <div class="msg">Sign in to start your session</div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -63,28 +56,29 @@
                                 </div>
                             </form>
 
-                            <!-- show errors  -->
-                            <div class=" m-t-15">
-                                <?php
-                                if (count($errors) > 0) {
-                                    foreach ($errors as $key => $value) {
-                                        # code...
-                                
-                                        echo '
-                                                            <div class="alert alert-danger">
-                                                            <strong>' .
-                                            $key .
-                                            ': </strong> ' .
-                                            $value .
-                                            ' </div>' .
-                                            '<br>';
-                                    }
-                                }
-                                ?>
-                            </div>
+
 
 
                         </div>
+                    </div>
+
+                    <!-- show errors  -->
+                    <div class=" m-t-15">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (session()->get('Message') !== null)
+                            <div class="alert alert-danger">
+                                {{ session()->get('Message') }}
+                            </div>
+                        @endif
+
                     </div>
                 </div>
 
