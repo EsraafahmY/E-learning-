@@ -40,6 +40,7 @@ Route::resource('Exam',"questionController");
 Route::resource('Role',"roleController");
 Route::resource('Rate',"userRateController");
 Route::get('Students','userController@students');
+Route::get('yourTracks','trackController@yourTracks');
 
 
 
