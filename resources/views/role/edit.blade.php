@@ -1,11 +1,8 @@
 @include('shared.header')
 @include('shared.nav')
 @include('shared.sidNav')
-<section class="content">
-    <div class="container-fluid">
-        <div class="row clearfix">
 
-        <section class="content">
+<section class="content">
     <div class="container-fluid">
 
         <!-- Inline Layout | With Floating Label -->
@@ -14,55 +11,60 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            update role
+                            update Role
                         </h2>
 
                     </div>
                     <div class="body">
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-                        <form method="post" action="{{ url('/Role/'. $data[0]->ID) }}" enctype="multipart/form-data">
-                        @method('put')
+                        <form method="post" action="{{ url('/Role/' . $data[0]->ID) }}"
+                            enctype="multipart/form-data">
+
+                            @method('put')
                             @csrf
+
                             <div class="row clearfix">
-                                
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                     <div class="form-group form-float">
-                                        <div class="">
-                                            <div class="demo-radio-button pull-right">
-
-                                            @foreach ($data as $key => $value)
-                                        @if ($value->ID == 1)
-                                            @continue
-                                        @endif
-                                        <input name="roleID" value="{{ $value->ID }}" type="radio"
-                                            class="with-gap radio-col-light-green" id="{{ 'radio_' . $key }}" />
-                                        <label for="{{ 'radio_' . $key }}">{{ ucfirst($value->title) }}</label>
-                                    @endforeach
-                                               
-                                            </div>
-
-                                            <label class="form-label">Role</label>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="title"
+                                                value="{{ $data[0]->title }}">
+                                            <label class="form-label">Role Title</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-                                    <button type="submit" class="btn btn-primary btn-block btn-lg m-l-15 pull-right waves-effect">Update</button>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg m-l-15 waves-effect">update</button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
-              
+                    {{-- # Dispaly error messages .... --}}
+
+                    @if (session()->get('Message') !== null)
+                        <div class="alert alert-info">
+                            {{ session()->get('Message') }}
+                        </div>
+
+                    @endif
+
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+
+
+
                 </div>
             </div>
         </div>
@@ -70,7 +72,5 @@
 
     </div>
 </section>
-        </div>
-    </div>
-</section>
+
 @include('shared.footer')

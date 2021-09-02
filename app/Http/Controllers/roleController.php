@@ -78,7 +78,7 @@ class roleController extends Controller
      */
     public function edit($id)
     {
-        $data = roleModel::get();
+        $data = roleModel::where('ID',$id)->get();
 
         return view('role.edit', ['data' => $data]);    }
 
@@ -122,31 +122,24 @@ class roleController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $op = roleModel::where('ID',$id)->delete();
 
-    public function update(Request $request, $id)
-    {
-        $data = $this->validate($request,[
-       
-            "title"  => "required",
-      
-           ]);
-      
-      
-           $op = roleModel::where('ID',$id)->update(["title" => $request->title]);
-      
-      
-            if($op){
-                $message = "Record Updated";
-            }else{
-                $message = "Error Try Again";
-            }
+        if($op){
+            $message =  "role Deleted";
 
+        }
+        else{
+            $message = "Error Try Again";
+        }
 
-            session()->flash('Message',$message);
+         session()->flash('Message',$message);
 
+         if(session()->get('user')->roleID==2){
+            return redirect(url('/Role/'.session()->get('user')->ID));
+        }else{
             return redirect(url('/Role'));
-
+        }
+    
     }
+
 }

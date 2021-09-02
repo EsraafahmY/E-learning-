@@ -36,9 +36,9 @@
                                     </h2>
                                 </div>
                                 <div class="body align-right">
-                                    <a href='{{ url('/Lesson/' . $value->ID) }}'
-                                        class=' btn btn-warning m-r-1em '>Show</a>
-                                    <a href=' {{ url('/Track/' . $value->ID . '/edit') }}'
+                                    <!-- <a href='{{ url('/Lesson/' . $value->ID) }}'
+                                        class=' btn btn-warning m-r-1em '>Show</a> -->
+                                    <a href=' {{ url('/Role/' . $value->ID . '/edit') }}'
                                         class='btn btn-primary m-r-1em'>Edit</a>
 
                                     <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"
