@@ -74,10 +74,10 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        Delete {{ $value->name }} !!!!
+                                        Delete {{ $value->title }} !!!!
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="{{ url('/Track/' . $value->ID) }}" method="post">
+                                        <form action="{{ url('/Role/' . $value->ID) }}" method="post">
 
                                             @method('delete') {{-- <input type="hidden" value="delete" name="_method"> --}}
                                             @csrf {{-- <input type="hidden" value="{{ csrf_tokken() }}" name="_token"> --}}
