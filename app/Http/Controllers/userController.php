@@ -80,7 +80,7 @@ class userController extends Controller
 
         session()->flash('Message', $message);
 
-        return redirect(url('/User'));
+        return redirect(url('/'));
 
         // return back();
     }
