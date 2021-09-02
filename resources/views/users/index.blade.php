@@ -24,7 +24,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <!-- <th>#</th> -->
+                                <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Type</th>
@@ -40,7 +40,7 @@
                                     <td>{{ ++$key }} </td>
                                     <td>{{ $value->Fname }} {{ $value->Lname }}</td>
                                     <td>{{ $value->email}}</td>
-                                    <td>{{ $value->tilte }}</td>
+                                    <td>{{ $value->title }}</td>
 
                                     <td>
                                         <a href='' data-toggle="modal" data-target="#modal_single_del{{ $key }}"  class='btn btn-danger m-r-1em'>Delete</a>
@@ -60,15 +60,15 @@
                     </div>
         
                     <div class="modal-body">
-                            Delete  {{ $value->name }} !!!!
+                            Delete  {{ $value->Fname }} {{ $value->Lname }} !!!!
                     </div>
                     <div class="modal-footer">
-                        <form action="{{ url('/destroy') }}" method="post">
+                        <form action="{{ url('User/'.$value->ID) }}" method="post">
                          
                             @method('delete') {{-- <input type="hidden" value="delete" name="_method"> --}}               
                             @csrf    {{-- <input type="hidden" value="{{ csrf_tokken() }}" name="_token"> --}}  
                           
-                            <input type="hidden" value="{{ $value->Id }}" name="id">
+                            <input type="hidden" value="{{ $value->ID }}" name="id">
 
                             <div class="not-empty-record">
                                 <button type="submit" class="btn btn-primary">Delete</button>

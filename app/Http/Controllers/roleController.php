@@ -17,7 +17,7 @@ class roleController extends Controller
     {
         $data = roleModel::paginate(10);
 
-        return view('role.index',['data' => $data]);   
+        return view('/role.index',['data' => $data]);   
      }
 
     /**
@@ -27,7 +27,7 @@ class roleController extends Controller
      */
     public function create()
     {
-        return view('role.create');
+        return view('/role.create');
 
     }
 

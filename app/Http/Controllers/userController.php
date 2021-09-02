@@ -17,7 +17,7 @@ class userController extends Controller
     public function index()
     {
         $data = userModel::select('users.*', 'role.title as title')
-            ->join('role', 'role.ID', '=', 'users.roleID')
+            ->join('role', 'users.roleID', '=', 'role.ID')
             ->paginate(50);
 
         return view('/users.index', ['data' => $data]);
@@ -52,7 +52,9 @@ class userController extends Controller
             // "image"    => "image|mimes:png,jpeg,jpg,gif",
             "address" => "required",
             "phone" => "required|min:11|numeric",
-            "roleID" => "required"
+            "roleID" => "required",
+            "job" => "",
+            "education" => ""
         ]);
 
         # upload image ... 
@@ -129,8 +131,21 @@ class userController extends Controller
      */
     public function destroy($id)
     {
-        return redirect(url('Login'));
-    }
+        // dd($id);
+        $op = userModel::where('ID',$id)->delete();
+
+        if($op){
+            $message =  "user Deleted";
+
+        }
+        else{
+            $message = "Error Try Again";
+        }
+
+         session()->flash('Message',$message);
+
+        return redirect(url('/User'));   
+     }
 
     public function login()
     {

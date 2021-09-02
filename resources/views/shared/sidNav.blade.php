@@ -4,7 +4,6 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                {{-- {{url().'/images/'}}  {{ auth()->user()->name }} {{ url().auth()->user()->img_dir }} --}}
                 <img src="{{ url(session()->get('user')->img_dir) }}" width="48" height="48" alt="User" />
 
             </div>
